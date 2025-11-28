@@ -111,7 +111,7 @@ def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tupl
     '''
 
     cartas = jugador[0]
-    libres = jugador[2].copy()
+    libres = jugador[0].copy()
     # libres.extend(cartas)
     
     # Hacer reporte

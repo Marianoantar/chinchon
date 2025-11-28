@@ -87,7 +87,7 @@ def comienzo_juego(
             mostrar_encabezado_turno()
             
             # ANALIZAR CARTAS
-            analizar(jugadores[jugador])
+            analizar(jugador = jugadores[jugador])
             
             datos_jugador = jugadores[jugador]
             mostrar_cartas_mano(jugador, datos_jugador)
@@ -99,12 +99,15 @@ def comienzo_juego(
                 if carta == None:
                     rearmar_mazo_del_descarte(mazo, descarte)
                     continue
-                break  # Tengo carta levantada
+                
+                # Tengo carta levantada
+                print(f"\nCarta levantada: {carta}")
+                break  
+            
             recibir_carta(jugadores[jugador], carta)
             
             # ANALIZAR CARTAS
-            # analizar(jugadores[jugador])
-            jugadores[jugador] = analizar(jugador = jugadores[jugador])
+            analizar(jugador = jugadores[jugador])
             
             # Mostrar cartas en mano
             mostrar_cartas_mano(jugador, jugadores[jugador])
