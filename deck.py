@@ -99,7 +99,7 @@ def levantar_carta(mazo: list[tuple[int,str]], descarte: list[tuple[int,str]]) -
             carta = robar_carta_mazo(mazo)
 
         elif pila =='D':
-            carta = robar_carta_descarte
+            carta = robar_carta_descarte(descarte)
             
         else:
             print("Error: No ingresaste nada. Vuelve a intentar...\n")

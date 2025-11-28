@@ -23,6 +23,7 @@ def reporte(cartas: list[tuple[int,str]]) -> tuple[
     
     for carta in cartas:
         # Evaluar REPETICIONES
+        print(f"Tipo de dato carta: {type(carta)}") #!!!!!!!!
         numero = carta[0]
         if numero in repeticiones:
             repeticiones[numero] +=1
@@ -111,6 +112,7 @@ def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tupl
     '''
 
     cartas = jugador[0]
+    print(f"cartas: {cartas}") #!!!!!!!!!
     libres = jugador[0].copy()
     # libres.extend(cartas)
     
