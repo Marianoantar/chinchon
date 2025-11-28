@@ -48,7 +48,8 @@ def robar_carta_descarte(descarte:list[tuple[int, str]]):
     '''
     Funcion que saca la última carta de la pila de descarte
     Entra: la pila de descarte
-    Sale: No devuelve nada ya que el mazo se modifica en el mismo lugar
+    Sale: retorna la ultima carta si es que hay, SINO retorna None.
+          El mazo se modifica en el mismo lugar
     '''
     carta = descarte.pop()
     return carta if carta else None
@@ -81,7 +82,35 @@ def crear_mazo() -> list[tuple[int,str]]:
     mazo = [(valor,palo) for palo in palos for valor in valores]
     return mazo
 
+# ---------------------
+# levantar_carta()
+# ---------------------
+def levantar_carta(mazo: list[tuple[int,str]], descarte: list[tuple[int,str]]) -> tuple[int,str]:
+    pila = ''
+    while pila == '':
+        entrada = input(f'Levantas carta del (M)azo O del (D)escarte({descarte[-1]})?: ')
+        
+        if not entrada:
+            print(f"Error: No ingresaste nada. Vuelve a intentar...\n")
+            continue
+        
+        pila = entrada[0].upper()
+        if pila == 'M':
+            carta = robar_carta_mazo(mazo)
 
+        elif pila =='D':
+            carta = robar_carta_descarte
+            
+        else:
+            print("Error: No ingresaste nada. Vuelve a intentar...\n")
+            pila = ''
+    
+    return carta
+            
+            
+        
+    
+    
 
 
 

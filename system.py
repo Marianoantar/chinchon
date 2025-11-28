@@ -66,7 +66,7 @@ def comienzo_juego(
     Ingresan: 
         -jugadores, 
         -mazo, 
-        -pila_descarte
+        -descarte
     
     '''
     
@@ -92,6 +92,26 @@ def comienzo_juego(
             datos_jugador = jugadores[jugador]
             mostrar_cartas_mano(jugador, datos_jugador)
             
-            pila = input(f'Levantas carta del mazo(M) O del descarte(D)[{descarte[-1]}]?: ')
+            # Levantar carta
+            while True:
+                carta = levantar_carta(mazo, descarte)
+                # Chequear carta
+                if carta == None:
+                    rearmar_mazo_del_descarte(mazo, descarte)
+                    continue
+                break  # Tengo carta levantada
+            recibir_carta(jugadores[jugador], carta)
+            
+            # ANALIZAR CARTAS
+            # analizar(jugadores[jugador])
+            jugadores[jugador] = analizar(jugador = jugadores[jugador])
+            
+            # Mostrar cartas en mano
+            mostrar_cartas_mano(jugador, jugadores[jugador])
+            
+            aaa = input("cual descartas")
+            
+            
+                
             
         

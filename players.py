@@ -25,7 +25,7 @@ def iniciar_jugadores(cantidad: int) -> dict[str,list[list[tuple[int,str]], list
 # ---------------------
 # recibir_carta()
 # ---------------------
-def recibir_carta(jugador, carta:list[tuple[int,str]]):
+def recibir_carta(jugador, carta:tuple[int,str]):
     print(jugador)
     jugador[0].append(carta)
     
