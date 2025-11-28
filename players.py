@@ -10,7 +10,8 @@ def iniciar_jugadores(cantidad: int) -> dict[str,list[list[tuple[int,str]], list
         mano:list[tuple[int,str]], 
         juegos:list[tuple[int,str], 
         libres:list[tuple[int,str], 
-        puntos:int, estado:bool]
+        puntos:int, 
+        estado:bool]
     '''
     
     jugadores = {}
@@ -57,7 +58,8 @@ def mostrar_cartas_mano(nombre_jugador:str, datos_jugador: list[list[tuple[int,s
     print(f'Nombre de jugador: {nombre_jugador}\n')
     print(f' . cartas en la mano: {datos_jugador[0]}')
     print(f' . juegos posibles: {datos_jugador[1]}')
-    print(f' . cartas libres: {datos_jugador[2]}\n')
+    print(f' . cartas libres: {datos_jugador[2]}')
+    print(f' . puntos en mano: {contar_puntos(datos_jugador[2])}')
     
     
         
@@ -69,4 +71,17 @@ def devolver_cartas(mazo, jugadores):
         print(len(mazo))
         mazo.extend(jugador[0])
         print(len(mazo))
+
+# ---------------------
+# contar_puntos()
+# ---------------------
+def contar_puntos(libres: list[tuple[int,str]]):
+    '''
+    Funcion que cuenta los numeros de las cartas libres del jugador.
+    Entra: libres (jugador[2])
+    Sale: la cantidad de puntos
+    '''
+    return sum(carta[0] for carta in libres)
+
+
     

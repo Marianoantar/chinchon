@@ -112,6 +112,16 @@ def comienzo_juego(
             # Mostrar cartas en mano
             mostrar_cartas_mano(jugador, jugadores[jugador])
             
+            # Analizar puntos
+            puntos = contar_puntos(jugadores[jugador][2])
+            if puntos <= 7: # PUEDE CORTAR
+                print("\n¡¡¡¡¡¡ Ya puede cortar !!!!!\n")
+                desicion =  input(f"Quiere cortar(1) o seguir jugando(enter): ")
+                
+                if desicion == "1":
+                    cortar_mano()
+            
+            
             aaa = input("cual descartas")
             
             

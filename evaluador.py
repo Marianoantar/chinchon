@@ -23,7 +23,6 @@ def reporte(cartas: list[tuple[int,str]]) -> tuple[
     
     for carta in cartas:
         # Evaluar REPETICIONES
-        print(f"Tipo de dato carta: {type(carta)}") #!!!!!!!!
         numero = carta[0]
         if numero in repeticiones:
             repeticiones[numero] +=1
@@ -108,11 +107,12 @@ def hay_escalera(palos: dict[str,list[int]]) -> bool:
 def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tuple[int,str]],int,bool]):
     '''
     Funcion que envia  las cartas a reporte() para luego evaluar resultados
+    Entra: jugador[mano, posibles_juegos, cartas_libres, puntos_acumulados, sigue_jugando]
+            jugador se modifica en la funcion.
     
     '''
 
-    cartas = jugador[0]
-    print(f"cartas: {cartas}") #!!!!!!!!!
+    cartas = jugador[0].copy()
     libres = jugador[0].copy()
     # libres.extend(cartas)
     
@@ -177,6 +177,9 @@ def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tupl
             jugador[1].append(juego)
             
     jugador[2] = libres.copy()
+    
+    # Analiza si puede cortar
+    
     
                 
     return jugador
