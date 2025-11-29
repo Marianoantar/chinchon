@@ -55,6 +55,20 @@ def mostrar_encabezado_turno(jugador):
     print('*' * 41)
     print(f'       SIGUIENTE TURNO - {jugador}')
     print('*' * 41)
+    
+# ---------------------
+# cortar()
+# ---------------------
+def cortar(nombre, jugadores):
+    '''
+    Funcion que inicia proceso de corte
+    Entra: nombre del jugador que corta y jugadores(dict)
+    '''
+    print(f"\n***** Iniciando Proceso de Corte de {nombre} *****\n")
+    
+    # Recorrer Jugadores
+    for jugador in jugadores:
+        pass
 
 
 # ---------------------
@@ -84,51 +98,64 @@ def comienzo_juego(
     
     print("Cantidad de cartas en el mazo: ", len(mazo))
     
-    # COMIENZO DE TURNOS
-    corte = False
-    while not corte:
-        for jugador in jugadores:
-            # Encabezado
-            mostrar_encabezado_turno(jugador)
-            
-            # ANALIZAR CARTAS
-            analizar(jugador = jugadores[jugador])
-            
-            datos_jugador = jugadores[jugador]
-            mostrar_cartas_mano(jugador, datos_jugador)
-            
-            # Levantar carta
-            while True:
-                carta = levantar_carta(mazo, descarte)
-                # Chequear carta
-                if carta == None:
-                    rearmar_mazo_del_descarte(mazo, descarte)
-                    continue
+    # COMIENZO DE RONDAS
+    
+    while sum(1 for jugador in jugadores if jugadores[jugador][4]) > 1: # Repite ciclo de Rondas hasta que quede 1 jugador
+    
+        # COMIENZO DE TURNOS
+        corte = False
+        while not corte:
+            for jugador in jugadores:
+                # Encabezado
+                mostrar_encabezado_turno(jugador)
                 
-                # Tengo carta levantada
-                print(f"\n  .Carta levantada: {carta}\n")
-                break  
-            
-            recibir_carta(jugadores[jugador], carta)
-            
-            # ANALIZAR CARTAS
-            analizar(jugador = jugadores[jugador])
-            
-            # Mostrar cartas en mano
-            mostrar_cartas_mano(jugador, jugadores[jugador])
-            
-            # Se puede cortar ???
-            if analizar_cortar(datos_jugador[2]):
+                # ANALIZAR CARTAS
+                analizar(jugador = jugadores[jugador])
                 
-                # PUEDE CORTAR
-                print(f"\n¡¡¡¡¡¡ {jugador} ya puede cortar !!!!!\n")
-                desicion =  input(f"Quiere cortar(1) o seguir jugando(enter): ")
+                datos_jugador = jugadores[jugador]
+                mostrar_cartas_mano(jugador, datos_jugador)
                 
-                if desicion == "1":
-                    cortar_mano(jugador, jugadores)
-            
-            descartar(jugador, jugadores, descarte)
-            
+                # Levantar carta
+                while True:
+                    carta = levantar_carta(mazo, descarte)
+                    # Chequear carta
+                    if carta == None:
+                        rearmar_mazo_del_descarte(mazo, descarte)
+                        continue
+                    
+                    # Tengo carta levantada
+                    print(f"\n  .Carta levantada: {carta}\n")
+                    break  
+                
+                recibir_carta(jugadores[jugador], carta)
+                
+                # ANALIZAR CARTAS
+                analizar(jugador = jugadores[jugador])
+                
+                # Mostrar cartas en mano
+                mostrar_cartas_mano(jugador, jugadores[jugador])
+                
+                # Se puede cortar ???
+                puede_cortar, carta_corte = analizar_cortar(datos_jugador[2])
+                if puede_cortar:
+                    
+                    # PUEDE CORTAR
+                    print(f"\n¡¡¡¡¡¡ {jugador} ya puede cortar !!!!!\n")
+                    desicion =  input(f"Quiere cortar(1) o seguir jugando(enter): ")
+                    
+                    if desicion == "1":
+                        
+                        # Terminar proceso de DESCARTE con la CARTA_CORTE
+                        descartar(carta, descarte, jugador, jugadores)
+                        
+                        # Iniciar Proceso de Corte                        
+                        cortar(jugador, jugadores)
+                
+                proceso_descartar(jugador, jugadores, descarte)
+    
+    # FIN DEL JUEGO
+    print("\n************** COMIENZO DE JUEGO **************\n")
+          
             
                 
             

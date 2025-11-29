@@ -185,24 +185,24 @@ def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tupl
     return jugador
 
 # ---------------------
-# analizar_cortar() -> bool
+# analizar_cortar() -> bool, carta
 # ---------------------
-def analizar_cortar(libres: list[tuple[int,str]]) -> bool:
+def analizar_cortar(libres: list[tuple[int,str]]) -> list[bool, tuple[int,str]]:
     '''
     Funcion que Analiza si puede cortar en funcion de las cartas libres en mano
     Entra: cartas libres en mano
-    Sale: True o False
+    Sale: True o False y carta_corte
     '''
     print("\nAnalizando para cortar...") #!!!!!!!!!!
     # ordenar libres
     libres_ordenadas = sorted(libres)
     
     # sacar la ultima carta(la mas alta que sería para cortar)
-    libres_ordenadas.pop()
+    carta = libres_ordenadas.pop()
     
     puntos = contar_puntos(libres_ordenadas)
     
-    return True if puntos <= 7 else False
+    return [True if puntos <= 7 else False, carta]
 
     
     

@@ -82,17 +82,12 @@ def contar_puntos(cartas: list[tuple[int,str]]):
     '''
     return sum(carta[0] for carta in cartas)
 
-# ---------------------
-# cortar_mano()
-# ---------------------
-def cortar_mano():
-    print("***** Cortando mano *****")
-    exit
+
     
 # ---------------------
 # descartar()
 # ---------------------
-def descartar(jugador: str, jugadores, descarte):
+def proceso_descartar(jugador: str, jugadores, descarte):
     '''
     funcion que permite el descarte de una carta de la mano de la cual se saca. tambien se saca la carta de libres (jugador[2])
     Entra:  . nombre de jugador
@@ -100,7 +95,7 @@ def descartar(jugador: str, jugadores, descarte):
             . descarte
     Sale: 
     '''
-    print("\nDescartando...")
+    print("\nProceso descarte...")
     elegida = ''
     # recorrer cartas
     for carta in jugadores[jugador][0]:
@@ -121,13 +116,22 @@ def descartar(jugador: str, jugadores, descarte):
             print("Error: La entra no es válida. Intentalo de nuevo.")
         
     carta = jugadores[jugador][0][elegida]
-    print(f"\nCarta elegida para Descarte: {carta}\n")
+    # print(f"\nCarta elegida para Descarte: {carta}\n")
     
     # Tengo la carta a descartar, ahora a sacarla de la mano
+    descartar(carta, descarte, jugador, jugadores)
+    
+def descartar(carta, descarte, jugador, jugadores):
+    '''
+    descarte es una funcion que cumple el proceso "fisico" de descartar, o sea, 
+        . quita la carta del maso
+        . agrega la carta a la pila de descarte
+    '''
+    print(f"\nDescartando {carta}...\n")
+
     try:
         jugadores[jugador][0].remove(carta)
         print(f"tu mano queda: {jugadores[jugador][0]}")
-        # break   
     except ValueError:
         pass
     
