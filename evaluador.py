@@ -2,6 +2,8 @@
 Modulo Evaluador
 '''
 
+from players import contar_puntos
+
 # ---------------------
 # reporte()
 # ---------------------
@@ -114,8 +116,10 @@ def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tupl
 
     cartas = jugador[0].copy()
     libres = jugador[0].copy()
-    # libres.extend(cartas)
     
+    # Vaciar posibles juegos para volcar el analisis
+    jugador[1] = []
+
     # Hacer reporte
     repeticiones, palos = reporte(cartas)
     
@@ -178,8 +182,28 @@ def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tupl
             
     jugador[2] = libres.copy()
     
-    # Analiza si puede cortar
-    
-    
-                
     return jugador
+
+# ---------------------
+# analizar_cortar() -> bool
+# ---------------------
+def analizar_cortar(libres: list[tuple[int,str]]) -> bool:
+    '''
+    Funcion que Analiza si puede cortar en funcion de las cartas libres en mano
+    Entra: cartas libres en mano
+    Sale: True o False
+    '''
+    print("\nAnalizando para cortar...") #!!!!!!!!!!
+    # ordenar libres
+    libres_ordenadas = sorted(libres)
+    
+    # sacar la ultima carta(la mas alta que sería para cortar)
+    libres_ordenadas.pop()
+    
+    puntos = contar_puntos(libres_ordenadas)
+    
+    return True if puntos <= 7 else False
+
+    
+    
+    

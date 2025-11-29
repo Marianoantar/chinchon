@@ -86,12 +86,14 @@ def crear_mazo() -> list[tuple[int,str]]:
 # levantar_carta()
 # ---------------------
 def levantar_carta(mazo: list[tuple[int,str]], descarte: list[tuple[int,str]]) -> tuple[int,str]:
+    
+    print("\nLevantando carta...")
     pila = ''
     while pila == '':
-        entrada = input(f'Levantas carta del (M)azo O del (D)escarte({descarte[-1]})?: ')
+        entrada = input(f'Elegir (M)azo | (D)escarte {descarte[-1]}?: ')
         
         if not entrada:
-            print(f"Error: No ingresaste nada. Vuelve a intentar...\n")
+            print(f"\nError: No ingresaste nada. Vuelve a intentar...\n")
             continue
         
         pila = entrada[0].upper()
@@ -102,7 +104,7 @@ def levantar_carta(mazo: list[tuple[int,str]], descarte: list[tuple[int,str]]) -
             carta = robar_carta_descarte(descarte)
             
         else:
-            print("Error: No ingresaste nada. Vuelve a intentar...\n")
+            print("\nError: No ingresaste nada. Vuelve a intentar...\n")
             pila = ''
     
     return carta

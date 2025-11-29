@@ -44,12 +44,17 @@ def repartir_cartas(
             # Se agrega a libres
             jugadores[jugador][2].append(carta)
 
-
-def mostrar_encabezado_turno():
+# ---------------------
+# mostrar Encabezado
+# ---------------------
+def mostrar_encabezado_turno(jugador):
+    '''
+    Funcion que muestra encabezado del turno con numbre del jugador
+    '''
     print()
-    print('*' * 30)
-    print('       SIGUIENTE TURNO')
-    print('*' * 30)
+    print('*' * 41)
+    print(f'       SIGUIENTE TURNO - {jugador}')
+    print('*' * 41)
 
 
 # ---------------------
@@ -84,7 +89,7 @@ def comienzo_juego(
     while not corte:
         for jugador in jugadores:
             # Encabezado
-            mostrar_encabezado_turno()
+            mostrar_encabezado_turno(jugador)
             
             # ANALIZAR CARTAS
             analizar(jugador = jugadores[jugador])
@@ -101,7 +106,7 @@ def comienzo_juego(
                     continue
                 
                 # Tengo carta levantada
-                print(f"\nCarta levantada: {carta}")
+                print(f"\n  .Carta levantada: {carta}\n")
                 break  
             
             recibir_carta(jugadores[jugador], carta)
@@ -112,17 +117,17 @@ def comienzo_juego(
             # Mostrar cartas en mano
             mostrar_cartas_mano(jugador, jugadores[jugador])
             
-            # Analizar puntos
-            puntos = contar_puntos(jugadores[jugador][2])
-            if puntos <= 7: # PUEDE CORTAR
-                print("\n¡¡¡¡¡¡ Ya puede cortar !!!!!\n")
+            # Se puede cortar ???
+            if analizar_cortar(datos_jugador[2]):
+                
+                # PUEDE CORTAR
+                print(f"\n¡¡¡¡¡¡ {jugador} ya puede cortar !!!!!\n")
                 desicion =  input(f"Quiere cortar(1) o seguir jugando(enter): ")
                 
                 if desicion == "1":
-                    cortar_mano()
+                    cortar_mano(jugador, jugadores)
             
-            
-            aaa = input("cual descartas")
+            descartar(jugador, jugadores, descarte)
             
             
                 

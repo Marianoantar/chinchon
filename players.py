@@ -55,7 +55,6 @@ def mostrar_cartas_mano(nombre_jugador:str, datos_jugador: list[list[tuple[int,s
             . Datos del jugador
     '''
     
-    print(f'Nombre de jugador: {nombre_jugador}\n')
     print(f' . cartas en la mano: {datos_jugador[0]}')
     print(f' . juegos posibles: {datos_jugador[1]}')
     print(f' . cartas libres: {datos_jugador[2]}')
@@ -75,13 +74,71 @@ def devolver_cartas(mazo, jugadores):
 # ---------------------
 # contar_puntos()
 # ---------------------
-def contar_puntos(libres: list[tuple[int,str]]):
+def contar_puntos(cartas: list[tuple[int,str]]):
     '''
     Funcion que cuenta los numeros de las cartas libres del jugador.
     Entra: libres (jugador[2])
     Sale: la cantidad de puntos
     '''
-    return sum(carta[0] for carta in libres)
+    return sum(carta[0] for carta in cartas)
+
+# ---------------------
+# cortar_mano()
+# ---------------------
+def cortar_mano():
+    print("***** Cortando mano *****")
+    exit
+    
+# ---------------------
+# descartar()
+# ---------------------
+def descartar(jugador: str, jugadores, descarte):
+    '''
+    funcion que permite el descarte de una carta de la mano de la cual se saca. tambien se saca la carta de libres (jugador[2])
+    Entra:  . nombre de jugador
+            . jugadores(dict)
+            . descarte
+    Sale: 
+    '''
+    print("\nDescartando...")
+    elegida = ''
+    # recorrer cartas
+    for carta in jugadores[jugador][0]:
+        print(f"{jugadores[jugador][0].index(carta)} - {carta}")
+        
+    while True:
+        elegida = input("Tipea el numero de carta que quieres descartar: ")
+        
+        # Convertir elegida a entero
+        try:
+            elegida = int(elegida)
+            if elegida in range(8): # Si el elegida esta dentro del rango de las cartas sale para seguir el proceso
+                break
+            else:
+                # Si elegida esta fuera del rango vuelve arriba a pedir numero
+                print("Error: debes elegir el numero de carta(0 al 7)")
+        except ValueError:
+            print("Error: La entra no es válida. Intentalo de nuevo.")
+        
+    carta = jugadores[jugador][0][elegida]
+    print(f"\nCarta elegida para Descarte: {carta}\n")
+    
+    # Tengo la carta a descartar, ahora a sacarla de la mano
+    try:
+        jugadores[jugador][0].remove(carta)
+        print(f"tu mano queda: {jugadores[jugador][0]}")
+        # break   
+    except ValueError:
+        pass
+    
+    # Agregar carta a la pila de descarte
+    descarte.append(carta)
+        
+            
+    
+                    
+
+
 
 
     
