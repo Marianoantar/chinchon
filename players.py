@@ -65,11 +65,13 @@ def mostrar_cartas_mano(nombre_jugador:str, datos_jugador: list[list[tuple[int,s
 # ---------------------
 # devolver_cartas()
 # ---------------------
-def devolver_cartas(mazo, jugadores):
-    for jugador in jugadores.values():
-        print(len(mazo))
-        mazo.extend(jugador[0])
-        print(len(mazo))
+def devolver_cartas(jugadores):
+    for jugador in jugadores:
+        if jugadores[jugador][4]: # SI el jugador está habilitado para seguir jugando
+            jugadores[jugador][0] = []
+            jugadores[jugador][1] = []
+            jugadores[jugador][2] = []
+    
 
 # ---------------------
 # contar_puntos()
@@ -116,7 +118,6 @@ def proceso_descartar(jugador: str, jugadores, descarte):
             print("Error: La entra no es válida. Intentalo de nuevo.")
         
     carta = jugadores[jugador][0][elegida]
-    # print(f"\nCarta elegida para Descarte: {carta}\n")
     
     # Tengo la carta a descartar, ahora a sacarla de la mano
     descartar(carta, descarte, jugador, jugadores)
@@ -130,7 +131,8 @@ def descartar(carta, descarte, jugador, jugadores):
     print(f"\nDescartando {carta}...\n")
 
     try:
-        jugadores[jugador][0].remove(carta)
+        jugadores[jugador][0].remove(carta) # Borra carta de mano
+        jugadores[jugador][2].remove(carta) # Borra carta de libres
         print(f"tu mano queda: {jugadores[jugador][0]}")
     except ValueError:
         pass

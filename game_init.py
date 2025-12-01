@@ -20,19 +20,7 @@ def inicializar(cantidad_jugadores: int = 2) -> tuple[
     jugadores = iniciar_jugadores(cantidad_jugadores)
     print("- jugadores Iniciados!!!")
     
-    # Crea Mazo
-    mazo = crear_mazo()
-    print("- Mazo Iniciado!!!")
-    
-    # Mezclar Mazo
-    mezclar_mazo(mazo)
-    print("- Mazo mezclado!!!")
-    
-    # Repartir cartas (LO HACE system.repartir_cartas())
-    repartir_cartas(jugadores,mazo, descarte=[])
-    
-    # Iniciar descarte
-    descarte = iniciar_descarte(mazo)
+    mazo, descarte = barajar_y_dar(jugadores)
     
     return (jugadores, mazo, descarte)
     

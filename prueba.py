@@ -1,7 +1,7 @@
 
-from game_init import inicializar
+from game_init import *
 from system import *
-from evaluador import *
+# from evaluador import *
 
 jugadores, mazo, descarte = inicializar()
 
@@ -14,13 +14,17 @@ jugadores, mazo, descarte = inicializar()
 # jugadores["Jugador_1"] = [[(7, 'basto'), (1, 'copa'), (2, 'copa'), (8, 'basto'), (9, 'basto'), (3, 'copa'), (11, 'espada')], [], [(7, 'basto'), (1, 'copa'), (2, 'copa'), (8, 'basto'), (9, 'basto'), (3, 'copa'), (11, 'espada')], 0, True]
 
 # 2 escalera de basto(1,2,3) y (7,8,9). Libre 11 de espadas
-jugadores["Jugador_1"] = [[(7, 'basto'), (1, 'basto'), (2, 'basto'), (8, 'basto'), (9, 'basto'), (3, 'basto'), (11, 'espada')], [], [(7, 'basto'), (1, 'basto'), (2, 'basto'), (8, 'basto'), (9, 'basto'), (3, 'basto'), (11, 'espada')], 0, True]
+jugadores["Jugador_1"] = [[(1, 'basto'), (2, 'basto'), (3, 'basto'), (4, 'basto'), (7, 'basto'),  (8, 'basto'), (9, 'basto')], [], [], 0, True]
+# jugadores["Jugador_2"][3] = 95
 
 # ANALIZAR CARTAS
-jugadores["Jugador_1"] = analizar(jugador = jugadores["Jugador_1"])
+# jugadores["Jugador_1"] = analizar(jugador = jugadores["Jugador_1"])
 
-datos_jugador = jugadores["Jugador_1"]
+# datos_jugador = jugadores["Jugador_1"]
 
-mostrar_cartas_mano("Jugador_1", datos_jugador)
+# mostrar_cartas_mano("Jugador_1", datos_jugador)
 
 # mostrar_cartas_mano("Jugador_1", jugadores["Jugador_1"])
+
+
+comienzo_juego(jugadores, mazo, descarte)

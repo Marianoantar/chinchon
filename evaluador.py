@@ -45,17 +45,18 @@ def reporte(cartas: list[tuple[int,str]]) -> tuple[
 # ---------------------
 # hay_escalera()
 # ---------------------
-def hay_escalera(palos: dict[str,list[int]]) -> bool:
+def hay_escalera(palos: dict[str,list[int]]) -> tuple[bool, dict[str, list[list[int]]]]:
     """'''
     Funcion que comprueba si hay escalera.
     Recibe una lista de tuplas de entero, string
     - las agrupa en el diccionario cartas_por_palo SEGUN PALO
     - devuelve True si hay 3 o mas valores consecutivos de un mismo palo sino devuelve False
+    - si hubiera 2 escaleras del MISMO PALO devuelve una lista de listas (2 escaleras) en el mismo palo.
     - tambien devuelve False si son menos de 3 tuplas, si son mas de 7 tuplas o si la lista está vacía
 
     '''"""
     es_escalera = False
-    escaleras: dict[str,list[int]] = {} # Registra todas las escaleras que haya. Clave: palo, valor: lista de numeros que forman escalera
+    escaleras: dict[str,list[list[int]]] = {} # Registra todas las escaleras que haya. Clave: palo, valor: lista de numeros que forman escalera
     
     # Recorre las listas de numeros por palo
     for palo, numeros in palos.items():
@@ -65,41 +66,25 @@ def hay_escalera(palos: dict[str,list[int]]) -> bool:
         escalera_x_palo = 0
         if len(lista_de_numeros) < 3:
             continue
-
+        secuencias = []
         temp = [lista_de_numeros[0]] # Acumula numeros consecutivos
         for i in range(1, len(lista_de_numeros)):
             
             # El numero actual es consecutivo al anterior???
             if lista_de_numeros[i] == lista_de_numeros[i - 1] + 1:
                 temp.append(lista_de_numeros[i]) # Sumarlo a lista temp
-                
-                # Temp tiene 3 o + elementos?
-                if len(temp) >= 3: 
-                    
-                    # Ya Hay una escalera con el mismo palo???
-                    if escalera_x_palo:
-                        mismo_palo = palo + '1' # Concatena "palo1"
-                        escaleras[mismo_palo] = temp # Guarda SEGUNDA escalera
-                    else:
-                        escaleras[palo] = temp # Guardar PRIMER escalera
-                        
-                    escalera_x_palo += 1  # Sumar contador de escalera * palo
-                    es_escalera = True # levantar bandera es_escalera
-                    
             else:
+                if len(temp) >= 3:
+                    secuencias.append(temp)
                 temp = [lista_de_numeros[i]]
         
-        # Pasar diccionario escaleras a una lista de cartas
-        # cartas_escalera = []
-        # for palo, numeros in escaleras.items:
-        #     juego = []
-        #     for numero in numeros:
-        #         carta = (numero,palo)
-        #         juego.append(carta) # Agrega carta a lista juego
+        if len(temp) >= 3:
+            secuencias.append(temp)
             
-        #     # Agrega lista juego a cartas escalera
-        #     cartas_escalera.append(juego)
-
+        if secuencias:
+            escaleras[palo] = secuencias
+            es_escalera = True
+            
     return es_escalera, escaleras # El diccionario escaleras contiene las cartas de todas las escaleras que hay en lista
 
 
@@ -156,29 +141,34 @@ def analizar(jugador: list[list[tuple[int,str]], list[tuple[int,str]], list[tupl
     escalera, cartas_escalera = hay_escalera(palos)
     
     if escalera:
-        print(f"Cartas_escalera: {cartas_escalera}")
         # Sacando Cartas escaleras de cartas libres
-        for palo in cartas_escalera:
-            juego = []
-            for numero in cartas_escalera[palo]:
+        
+        # Recorre por palo
+        for palo, secuencias in cartas_escalera.items():
+            
+            # Recorre las listas de juegos en cada palo
+            for lista in secuencias:
+                juego = []
                 
-                # Eliminando el 1 si es del mismo palo que anterior
-                if palo[-1:] == "1":
-                    palo = palo[:-1]
+                for numero in lista:
                     
-                carta = (numero, palo)
+                    # Eliminando el 1 si es del mismo palo que anterior
+                    # if palo[-1:] == "1":
+                    #     palo = palo[:-1]
+                        
+                    carta = (numero, palo)
 
-                # # Saca de libres la carta que forma escalera
-                try:
-                    libres.remove(carta) 
-                except ValueError:
-                    pass
-                
-                # Agregar carta al juego para luego sumarlo a posibles juegos
-                juego.append(carta)
-                
-            # Agregar Cartas escalera a posibles juegos (jugador[1])
-            jugador[1].append(juego)
+                    # Saca de libres la carta que forma escalera
+                    try:
+                        libres.remove(carta) 
+                    except ValueError:
+                        pass
+                    
+                    # Agregar carta al juego para luego sumarlo a posibles juegos
+                    juego.append(carta)
+                    
+                # Agregar Cartas escalera a posibles juegos (jugador[1])
+                jugador[1].append(juego)
             
     jugador[2] = libres.copy()
     
@@ -194,6 +184,11 @@ def analizar_cortar(libres: list[tuple[int,str]]) -> list[bool, tuple[int,str]]:
     Sale: True o False y carta_corte
     '''
     print("\nAnalizando para cortar...") #!!!!!!!!!!
+    
+    # si ttodas las cartas forman juego
+    if len(libres) == 0:
+        return [True] #! ACA NO SE QUE CARTA DEVOLVER PORQUE NO HAY EN LIBRES
+    
     # ordenar libres
     libres_ordenadas = sorted(libres)
     
