@@ -3,9 +3,22 @@ Modulo System
 '''
 
 # Importaciones
+import os
+
 from deck import *
 from players import *
 from evaluador import *
+
+def borrar_pantalla():
+    """
+    Borra la consola detectando el sistema operativo.
+    """
+    # Windows usa el comando 'cls'
+    if os.name == 'nt':
+        os.system('cls')
+    # Linux y macOS (y otros sistemas basados en Unix) usan 'clear'
+    else:
+        os.system('clear')
 
 # ---------------------
 # repartir_cartas()
@@ -269,6 +282,8 @@ def comienzo_juego(
         if seguir.upper() == 'X':
             print("Elegiste salir del juego")
             break
+        
+        borrar_pantalla()
         
         # PONER EN 0 LAS MANOS DE LOS JUGADORES HABILITADOS PARA SEGUIR
         devolver_cartas(jugadores)
